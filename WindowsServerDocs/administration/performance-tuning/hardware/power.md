@@ -43,7 +43,7 @@ Fans, like power supplies, are an area where you can reduce energy consumption w
 
 ## USB devices Recommendations
 
-Windows Server 2016 enables selective suspend for USB devices by default. However, a poorly written device driver can still disrupt system energy efficiency by a sizeable margin. To avoid potential issues, disconnect USB devices, disable them in the BIOS, or choose servers that do not require USB devices.
+Windows Server enables selective suspend for USB devices by default. However, a poorly written device driver can still disrupt system energy efficiency by a sizeable margin. To avoid potential issues, disconnect USB devices, disable them in the BIOS, or choose servers that do not require USB devices.
 
 ## Remotely-managed Power Strip Recommendations
 
