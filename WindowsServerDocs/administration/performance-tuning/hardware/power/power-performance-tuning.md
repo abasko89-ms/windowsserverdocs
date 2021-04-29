@@ -11,9 +11,9 @@ ms.date: 10/16/2017
 
 Energy efficiency is increasingly important in enterprise and data center environments, and it adds another set of tradeoffs to the mix of configuration options.
 
-Windows Server 2016 is optimized for excellent energy efficiency with minimum performance impact across a wide range of customer workloads. [Processor Power Management (PPM) Tuning for the Windows Server Balanced Power Plan](processor-power-management-tuning.md) describes the workloads used for tuning the default parameters in Windows Server 2016, and provides suggestions for customized tunings.
+Windows Server 2022 is optimized for excellent energy efficiency with minimum performance impact across a wide range of customer workloads. [Processor Power Management (PPM) Tuning for the Windows Server Balanced Power Plan](processor-power-management-tuning.md) describes the workloads used for tuning the default parameters in Windows Server 2022, and provides suggestions for customized tunings.
 
-This section expands on energy-efficiency tradeoffs to help you make informed decisions if you need to adjust the default power settings on your server. However, the majority of server hardware and workloads should not require administrator power tuning when running Windows Server 2016.
+This section expands on energy-efficiency tradeoffs to help you make informed decisions if you need to adjust the default power settings on your server. However, the majority of server hardware and workloads should not require administrator power tuning when running Windows Server 2022.
 
 ## Calculating server energy efficiency
 
@@ -31,7 +31,7 @@ Similarly, if you tune your server to increase performance by 5 percent, and tha
 
 You should establish a baseline power measurement before you tune your server for energy efficiency.
 
-If your server has the necessary support, you can use the power metering and budgeting features in Windows Server 2016 to view system-level energy consumption by using Performance Monitor.
+If your server has the necessary support, you can use the power metering and budgeting features in Windows Server 2022 to view system-level energy consumption by using Performance Monitor.
 
 One way to determine whether your server has support for metering and budgeting is to review the [Windows Server Catalog](https://www.windowsservercatalog.com). If your server model qualifies for the new Enhanced Power Management qualification in the Windows Hardware Certification Program, it is guaranteed to support the metering and budgeting functionality.
 
@@ -62,7 +62,7 @@ For more info about PowerCfg.exe, see [Using PowerCfg to Evaluate System Energy 
 
 ## Using power plans in Windows Server
 
-Windows Server 2016 has three built-in power plans designed to meet different sets of business needs. These plans provide a simple way for you to customize a server to meet power or performance goals. The following table describes the plans, lists the common scenarios in which to use each plan, and gives some implementation details for each plan.
+Windows Server 2022 has three built-in power plans designed to meet different sets of business needs. These plans provide a simple way for you to customize a server to meet power or performance goals. The following table describes the plans, lists the common scenarios in which to use each plan, and gives some implementation details for each plan.
 
 | **Plan** | **Description** | **Common applicable scenarios** | **Implementation highlights** |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -86,7 +86,7 @@ The following sections describe ways to tune some specific processor power manag
 
 ## Processor performance boost mode
 
-Intel Turbo Boost and AMD Turbo CORE technologies are features that allow processors to achieve additional performance when it is most useful (that is, at high system loads). However, this feature increases CPU core energy consumption, so Windows Server 2016 configures Turbo technologies based on the power policy that is in use and the specific processor implementation.
+Intel Turbo Boost and AMD Turbo CORE technologies are features that allow processors to achieve additional performance when it is most useful (that is, at high system loads). However, this feature increases CPU core energy consumption, so Windows Server 2022 configures Turbo technologies based on the power policy that is in use and the specific processor implementation.
 
 Turbo is enabled for High Performance power plans on all Intel and AMD processors and it is disabled for Power Saver power plans. For Balanced power plans on systems that rely on traditional P-state-based frequency management, Turbo is enabled by default only if the platform supports the EPB register.
 
@@ -101,7 +101,7 @@ For P-state-based control, the choices are Disabled, Enabled (Turbo is available
 
 For CPPC-based control, the choices are Disabled, Efficient Enabled (Windows specifies the exact amount of Turbo to provide), and Aggressive (Windows asks for "maximum performance" to enable Turbo).
 
-In Windows Server 2016, the default value for Boost Mode is 3.
+In Windows Server 2022, the default value for Boost Mode is 3.
 
 | **Name** | **P-state-based behavior** | **CPPC behavior** |
 |--------------------------|------------------------|-------------------|
@@ -182,7 +182,7 @@ Cores that are parked generally do not have any threads scheduled, and they will
 
 For most servers, the default core-parking behavior provides a reasonable balance of throughput and energy efficiency. On processors where core parking may not show as much benefit on generic workloads, it can be disabled by default.
 
-If your server has specific core parking requirements, you can control the number of cores that are available to park by using the **Processor Performance Core Parking Maximum Cores** parameter or the **Processor Performance Core Parking Minimum Cores** parameter in Windows Server 2016.
+If your server has specific core parking requirements, you can control the number of cores that are available to park by using the **Processor Performance Core Parking Maximum Cores** parameter or the **Processor Performance Core Parking Minimum Cores** parameter in Windows Server 2022.
 
 One scenario that core parking isn't always optimal for is when there are one or more active threads affinitized to a non-trivial subset of CPUs in a NUMA node (that is, more than 1 CPU, but less than the entire set of CPUs on the node). When the core parking algorithm is picking cores to unpark (assuming an increase in workload intensity occurs), it may not always pick the cores within the active affinitized subset (or subsets) to unpark, and thus may end up unparking cores that won't actually be utilized.
 
@@ -202,7 +202,7 @@ Powercfg -setactive scheme_current
 
 ## Processor performance core parking utility distribution
 
-Utility Distribution is an algorithmic optimization in Windows Server 2016 that is designed to improve power efficiency for some workloads. It tracks unmovable CPU activity (that is, DPCs, interrupts, or strictly affinitized threads), and it predicts the future work on each processor based on the assumption that any movable work can be distributed equally across all unparked cores.
+Utility Distribution is an algorithmic optimization in Windows Server 2022 that is designed to improve power efficiency for some workloads. It tracks unmovable CPU activity (that is, DPCs, interrupts, or strictly affinitized threads), and it predicts the future work on each processor based on the assumption that any movable work can be distributed equally across all unparked cores.
 
 Utility Distribution is enabled by default for the Balanced power plan for some processors. It can reduce processor power consumption by lowering the requested CPU frequencies of workloads that are in a reasonably steady state. However, Utility Distribution is not necessarily a good algorithmic choice for workloads that are subject to high activity bursts or for programs where the workload quickly and randomly shifts across processors.
 
